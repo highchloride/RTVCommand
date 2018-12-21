@@ -19,6 +19,7 @@ namespace RTVCommand
         //Setup our Managers
         public ConfigManager ConfigManager;
         public MediaLibrary MediaLibrary;
+        public ScheduleController ScheduleController;
 
         //MAIN INSERT
         public Form1()
@@ -27,6 +28,8 @@ namespace RTVCommand
             ConfigManager = new ConfigManager();
 
             MediaLibrary = new MediaLibrary(ConfigManager.ProgramPath);
+
+            ScheduleController = new ScheduleController();
 
             //Start the Form, Buttons, Labels, etc
             InitializeComponent();
@@ -41,41 +44,32 @@ namespace RTVCommand
             RefreshTextLabels();            
         }
 
-        //Updates the MediaLibrary DGV
+        /// <summary>
+        /// If its the first-run, this will build columns for the grid at runtime.
+        /// Next, it polls the contents of the loaded MediaLibrary and populates.
+        /// </summary>
         private void RefreshMediaLibraryGrid()
         {
-            
-
             //Populate the columns if none
             if (dgvMediaViewer.Rows.Count <= 0)
             {
-                DataGridViewCell cell = new DataGridViewTextBoxCell();
-
-                DataGridViewColumn dc1 = new DataGridViewColumn()
-                {
-                    CellTemplate = cell,
-                    Name = "Name",
-                    ValueType = typeof(string)
-                };
-
-                DataGridViewColumn dc2 = new DataGridViewColumn()
-                {
-                    CellTemplate = cell,
-                    Name = "Length",
-                    ValueType = typeof(int)
-                };
-                
-                dgvMediaViewer.Columns.Add(dc1);
-                dgvMediaViewer.Columns.Add(dc2);
+                MediaLibrary.CreateLibraryColumns(dgvMediaViewer);
             }            
+
+            //Clear row content
+            //dgvMediaViewer.Rows.Clear();
 
             //Populate new rows - Invoke Media object from the CurrentLibrary
             foreach(Media media in MediaLibrary.CurrentLibrary)
             {
-                dgvMediaViewer.Rows.Add(media.Name, media.Length.TotalSeconds + " seconds");
+                dgvMediaViewer.Rows.Add(media.Name, media.Length.TotalSeconds + " seconds", media.MediaExtension, media.Category, media.SubCategory);
             }
         }
 
+        /// <summary>
+        /// First run will populate the column names.
+        /// Once that's taken care of, this will populate the content of the loaded playlist.
+        /// </summary>
         private void RefreshPlaylistGrid()
         {
 
@@ -183,6 +177,7 @@ namespace RTVCommand
                 }
 
                 //Then take it out of the DGV
+                //Faster to remove the individual items than cause a refresh of the entire library
                 foreach (DataGridViewRow row in dgvMediaViewer.SelectedRows)
                 {
                     if (!row.IsNewRow)

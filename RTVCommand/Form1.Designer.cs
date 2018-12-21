@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPlayerPath = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnConfigurePlayer = new System.Windows.Forms.Button();
+            this.dgvScheduleControl = new System.Windows.Forms.DataGridView();
+            this.btnRemoveFromSchedule = new System.Windows.Forms.Button();
+            this.btnAddToSchedule = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnDeletePlaylist = new System.Windows.Forms.Button();
             this.btnLoadPlaylist = new System.Windows.Forms.Button();
@@ -41,18 +47,18 @@
             this.dgvMediaViewer = new System.Windows.Forms.DataGridView();
             this.btnAddNewMedia = new System.Windows.Forms.Button();
             this.btnRemoveMedia = new System.Windows.Forms.Button();
-            this.dgvScheduleControl = new System.Windows.Forms.DataGridView();
-            this.btnConfigurePlayer = new System.Windows.Forms.Button();
-            this.btnRemoveFromSchedule = new System.Windows.Forms.Button();
-            this.btnAddToSchedule = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtPlayerPath = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScheduleControl)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylistViewer)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMediaViewer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScheduleControl)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -70,8 +76,68 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Scheduler Control";
             // 
+            // txtPlayerPath
+            // 
+            this.txtPlayerPath.AutoEllipsis = true;
+            this.txtPlayerPath.Location = new System.Drawing.Point(537, 121);
+            this.txtPlayerPath.Name = "txtPlayerPath";
+            this.txtPlayerPath.Size = new System.Drawing.Size(324, 18);
+            this.txtPlayerPath.TabIndex = 9;
+            this.txtPlayerPath.Text = "C:\\Path\\To\\Player.exe";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(434, 121);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Media Player Path:";
+            // 
+            // btnConfigurePlayer
+            // 
+            this.btnConfigurePlayer.Location = new System.Drawing.Point(291, 116);
+            this.btnConfigurePlayer.Name = "btnConfigurePlayer";
+            this.btnConfigurePlayer.Size = new System.Drawing.Size(136, 23);
+            this.btnConfigurePlayer.TabIndex = 7;
+            this.btnConfigurePlayer.Text = "Configure Media Player";
+            this.btnConfigurePlayer.UseVisualStyleBackColor = true;
+            this.btnConfigurePlayer.Click += new System.EventHandler(this.btnConfigurePlayer_Click);
+            // 
+            // dgvScheduleControl
+            // 
+            this.dgvScheduleControl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvScheduleControl.Location = new System.Drawing.Point(7, 19);
+            this.dgvScheduleControl.Name = "dgvScheduleControl";
+            this.dgvScheduleControl.Size = new System.Drawing.Size(854, 91);
+            this.dgvScheduleControl.TabIndex = 5;
+            // 
+            // btnRemoveFromSchedule
+            // 
+            this.btnRemoveFromSchedule.Enabled = false;
+            this.btnRemoveFromSchedule.Location = new System.Drawing.Point(142, 116);
+            this.btnRemoveFromSchedule.Name = "btnRemoveFromSchedule";
+            this.btnRemoveFromSchedule.Size = new System.Drawing.Size(127, 23);
+            this.btnRemoveFromSchedule.TabIndex = 6;
+            this.btnRemoveFromSchedule.Text = "Remove from Schedule";
+            this.btnRemoveFromSchedule.UseVisualStyleBackColor = true;
+            this.btnRemoveFromSchedule.Click += new System.EventHandler(this.btnRemoveFromSchedule_Click);
+            // 
+            // btnAddToSchedule
+            // 
+            this.btnAddToSchedule.Enabled = false;
+            this.btnAddToSchedule.Location = new System.Drawing.Point(19, 116);
+            this.btnAddToSchedule.Name = "btnAddToSchedule";
+            this.btnAddToSchedule.Size = new System.Drawing.Size(101, 23);
+            this.btnAddToSchedule.TabIndex = 5;
+            this.btnAddToSchedule.Text = "Add to Schedule";
+            this.btnAddToSchedule.UseVisualStyleBackColor = true;
+            this.btnAddToSchedule.Click += new System.EventHandler(this.btnAddToSchedule_Click);
+            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.btnDeletePlaylist);
             this.groupBox2.Controls.Add(this.btnLoadPlaylist);
             this.groupBox2.Controls.Add(this.btnSavePlaylist);
@@ -86,6 +152,7 @@
             // 
             // btnDeletePlaylist
             // 
+            this.btnDeletePlaylist.Enabled = false;
             this.btnDeletePlaylist.Location = new System.Drawing.Point(347, 164);
             this.btnDeletePlaylist.Name = "btnDeletePlaylist";
             this.btnDeletePlaylist.Size = new System.Drawing.Size(81, 23);
@@ -106,6 +173,7 @@
             // 
             // btnSavePlaylist
             // 
+            this.btnSavePlaylist.Enabled = false;
             this.btnSavePlaylist.Location = new System.Drawing.Point(119, 164);
             this.btnSavePlaylist.Name = "btnSavePlaylist";
             this.btnSavePlaylist.Size = new System.Drawing.Size(85, 23);
@@ -134,6 +202,10 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button3);
+            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.btnEditMediaMetadata);
             this.groupBox3.Controls.Add(this.btnFilterSettings);
             this.groupBox3.Controls.Add(this.dgvMediaViewer);
@@ -148,7 +220,8 @@
             // 
             // btnEditMediaMetadata
             // 
-            this.btnEditMediaMetadata.Location = new System.Drawing.Point(383, 168);
+            this.btnEditMediaMetadata.Enabled = false;
+            this.btnEditMediaMetadata.Location = new System.Drawing.Point(253, 168);
             this.btnEditMediaMetadata.Name = "btnEditMediaMetadata";
             this.btnEditMediaMetadata.Size = new System.Drawing.Size(81, 23);
             this.btnEditMediaMetadata.TabIndex = 9;
@@ -158,7 +231,7 @@
             // 
             // btnFilterSettings
             // 
-            this.btnFilterSettings.Location = new System.Drawing.Point(267, 168);
+            this.btnFilterSettings.Location = new System.Drawing.Point(362, 168);
             this.btnFilterSettings.Name = "btnFilterSettings";
             this.btnFilterSettings.Size = new System.Drawing.Size(81, 23);
             this.btnFilterSettings.TabIndex = 8;
@@ -186,7 +259,8 @@
             // 
             // btnRemoveMedia
             // 
-            this.btnRemoveMedia.Location = new System.Drawing.Point(129, 168);
+            this.btnRemoveMedia.Enabled = false;
+            this.btnRemoveMedia.Location = new System.Drawing.Point(122, 168);
             this.btnRemoveMedia.Name = "btnRemoveMedia";
             this.btnRemoveMedia.Size = new System.Drawing.Size(103, 23);
             this.btnRemoveMedia.TabIndex = 6;
@@ -194,63 +268,63 @@
             this.btnRemoveMedia.UseVisualStyleBackColor = true;
             this.btnRemoveMedia.Click += new System.EventHandler(this.btnRemoveMedia_Click);
             // 
-            // dgvScheduleControl
+            // label2
             // 
-            this.dgvScheduleControl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvScheduleControl.Location = new System.Drawing.Point(7, 19);
-            this.dgvScheduleControl.Name = "dgvScheduleControl";
-            this.dgvScheduleControl.Size = new System.Drawing.Size(854, 91);
-            this.dgvScheduleControl.TabIndex = 5;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(467, 173);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(131, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Selected Media to Playlist:";
             // 
-            // btnConfigurePlayer
+            // button1
             // 
-            this.btnConfigurePlayer.Location = new System.Drawing.Point(291, 116);
-            this.btnConfigurePlayer.Name = "btnConfigurePlayer";
-            this.btnConfigurePlayer.Size = new System.Drawing.Size(136, 23);
-            this.btnConfigurePlayer.TabIndex = 7;
-            this.btnConfigurePlayer.Text = "Configure Media Player";
-            this.btnConfigurePlayer.UseVisualStyleBackColor = true;
-            this.btnConfigurePlayer.Click += new System.EventHandler(this.btnConfigurePlayer_Click);
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(604, 168);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Beginning";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // btnRemoveFromSchedule
+            // button2
             // 
-            this.btnRemoveFromSchedule.Enabled = false;
-            this.btnRemoveFromSchedule.Location = new System.Drawing.Point(142, 116);
-            this.btnRemoveFromSchedule.Name = "btnRemoveFromSchedule";
-            this.btnRemoveFromSchedule.Size = new System.Drawing.Size(127, 23);
-            this.btnRemoveFromSchedule.TabIndex = 6;
-            this.btnRemoveFromSchedule.Text = "Remove from Schedule";
-            this.btnRemoveFromSchedule.UseVisualStyleBackColor = true;
-            this.btnRemoveFromSchedule.Click += new System.EventHandler(this.btnRemoveFromSchedule_Click);
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(685, 168);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "Selection";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // btnAddToSchedule
+            // button3
             // 
-            this.btnAddToSchedule.Enabled = false;
-            this.btnAddToSchedule.Location = new System.Drawing.Point(19, 116);
-            this.btnAddToSchedule.Name = "btnAddToSchedule";
-            this.btnAddToSchedule.Size = new System.Drawing.Size(101, 23);
-            this.btnAddToSchedule.TabIndex = 5;
-            this.btnAddToSchedule.Text = "Add to Schedule";
-            this.btnAddToSchedule.UseVisualStyleBackColor = true;
-            this.btnAddToSchedule.Click += new System.EventHandler(this.btnAddToSchedule_Click);
+            this.button3.Enabled = false;
+            this.button3.Location = new System.Drawing.Point(766, 168);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "End";
+            this.button3.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // label3
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(434, 121);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Media Player Path:";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(467, 169);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Selected Media Actions:";
             // 
-            // txtPlayerPath
+            // button4
             // 
-            this.txtPlayerPath.AutoEllipsis = true;
-            this.txtPlayerPath.Location = new System.Drawing.Point(537, 121);
-            this.txtPlayerPath.Name = "txtPlayerPath";
-            this.txtPlayerPath.Size = new System.Drawing.Size(324, 18);
-            this.txtPlayerPath.TabIndex = 9;
-            this.txtPlayerPath.Text = "C:\\Path\\To\\Player.exe";
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(604, 164);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "Remove";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -266,11 +340,13 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvScheduleControl)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlaylistViewer)).EndInit();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMediaViewer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvScheduleControl)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -296,6 +372,12 @@
         private System.Windows.Forms.DataGridView dgvScheduleControl;
         private System.Windows.Forms.Button btnRemoveFromSchedule;
         private System.Windows.Forms.Button btnAddToSchedule;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

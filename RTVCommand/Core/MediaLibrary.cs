@@ -9,9 +9,14 @@ using System.Runtime.Serialization;
 using RTVCommand.Objects;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using System.Windows.Forms;
 
 namespace RTVCommand.Core
 {
+    /// <summary>
+    /// The MediaLibrary is what it says on the tin, managing the CurrentLibrary list of Media objects. 
+    /// CurrentLibrary is saved/loaded on startup/shutdown.
+    /// </summary>
     public class MediaLibrary
     {
         //Internal to this class
@@ -27,30 +32,47 @@ namespace RTVCommand.Core
             LoadLibrary();
         }
 
-        //Add a file to the library - accepts a full path to the media file
+        /// <summary>
+        /// Populates a Media object with the provided full-path file string, then adds it to the CurrentLibrary.
+        /// </summary>
+        /// <param name="file"></param>
         public void AddToLibrary(string file)
         {
             FileInfo fileInfo = new FileInfo(file);
 
             //First, we'll make a Media object
             Media media = new Media();
-            media.Name = fileInfo.Name;
+            media.Name = Path.GetFileNameWithoutExtension(fileInfo.Name);            
             media.MediaPath = fileInfo.DirectoryName;
+            media.MediaExtension = fileInfo.Extension;
+            
 
-            //Retreive the duration via the WindowsAPICodePack Nuget package
-            //Grants direct shell access to values and we can probably get much more than just the length
+            //Retreive the media properties via the WindowsAPICodePack Nuget package
+            //Grants direct shell access to values
             using (var shell = ShellObject.FromParsingName(file))
             {
                 IShellProperty duration = shell.Properties.System.Media.Duration;
                 var t = (ulong)duration.ValueAsObject;
                 media.Length = TimeSpan.FromTicks((long)t);
+
+                //Ensure values aren't null before adding them to prevent crashes
+                IShellProperty encoding = shell.Properties.System.Media.EncodedBy;
+                if(encoding.ValueAsObject != null)
+                {
+                    var e = (string)encoding.ValueAsObject;
+                    media.Encoding = e;
+                }
+                
             }
 
             //Add the processed Media object to the Library list
             CurrentLibrary.Add(media);
         }
 
-        //Remove a file from the library
+        /// <summary>
+        /// Scans the CurrentLibrary for passed Media object. If found, it'll be removed.
+        /// </summary>
+        /// <param name="media"></param>
         public void RemoveFromLibrary(Media media)
         {
             var mediaToRemove = CurrentLibrary.FirstOrDefault(m => m.Name == media.Name);
@@ -60,16 +82,56 @@ namespace RTVCommand.Core
             }
         }
 
-        //Update DGV
-        public void UpdateLibraryView()
+        //Create Media Library Columns
+        public void CreateLibraryColumns(DataGridView dataGridView)
         {
-            foreach(Media media in CurrentLibrary)
+            DataGridViewCell cell = new DataGridViewTextBoxCell();
+
+            DataGridViewColumn dc1 = new DataGridViewColumn()
             {
-                System.Diagnostics.Debug.WriteLine(media.Name);
-            }
+                CellTemplate = cell,
+                Name = "Name",
+                ValueType = typeof(string)
+            };
+
+            DataGridViewColumn dc2 = new DataGridViewColumn()
+            {
+                CellTemplate = cell,
+                Name = "Length",
+                ValueType = typeof(int)
+            };
+
+            DataGridViewColumn dc3 = new DataGridViewColumn()
+            {
+                CellTemplate = cell,
+                Name = "Extension",
+                ValueType = typeof(string)
+            };
+
+            DataGridViewColumn dc4 = new DataGridViewColumn()
+            {
+                CellTemplate = cell,
+                Name = "Category",
+                ValueType = typeof(string)
+            };
+
+            DataGridViewColumn dc5 = new DataGridViewColumn()
+            {
+                CellTemplate = cell,
+                Name = "SubCategory",
+                ValueType = typeof(string)
+            };
+
+            dataGridView.Columns.Add(dc1);
+            dataGridView.Columns.Add(dc2);
+            dataGridView.Columns.Add(dc3);
+            dataGridView.Columns.Add(dc4);
+            dataGridView.Columns.Add(dc5);
         }
 
-        //Write the library data out
+        /// <summary>
+        /// Write the existing CurrentLibrary to _rtvLibraryFile.
+        /// </summary>
         public void SaveLibrary()
         {
             IFormatter formatter = new BinaryFormatter();
@@ -79,7 +141,9 @@ namespace RTVCommand.Core
             }
         }
 
-        //Load existing library data
+        /// <summary>
+        /// Load in the existing _rtvLibraryFile to the CurrentLibrary. If no _rtvLibraryFile exists, one will be created.
+        /// </summary>
         public void LoadLibrary()
         {
             if (File.Exists(ProgramPath + _rtvConfigPath + _rtvLibraryFile))

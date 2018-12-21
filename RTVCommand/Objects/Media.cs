@@ -16,11 +16,11 @@ namespace RTVCommand.Objects
         //Basic properties
         public string Name { get; set; }
         public string MediaPath { get; set; }
+        public string MediaExtension { get; set; }
 
         //File metadata
         public TimeSpan Length { get; set; }
         public string Encoding { get; set; }
-
 
         //RTV metadata
         public DateTime DateAdded { get; set; }
